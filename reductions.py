@@ -7,4 +7,4 @@ df = pd.read_excel('reductions.xlsx')
 reductions = df.set_index('No').to_dict(orient= 'index')
 
 reduction_table = [(key,  value["Reduction Description"], value ["Percentage"]) for key, value in reductions.items()]
-headers = ["No", "Reduction Description", "Percentage"]
+reduction_headers = ["No", "Reduction Description", "Percentage"]
