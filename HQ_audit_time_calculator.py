@@ -30,7 +30,6 @@ hq_audit_time = find_range_for_employee_count(audit_days_table,effective_no_empl
 print(f"Based on the effective number of employees, the audit time is: {round(hq_audit_time, 2)}\n")
 
 
-
 print("SELECT THE IAF CODE:")
 input("Please select the IAF code associated to the scope of certification. Press" " ENTER " "to view the table:" )
 print(tabulate(iaf_codes_table,headers= headers, tablefmt="grid"))
@@ -39,14 +38,13 @@ selected_iaf_code = int(input("Please type the Number associated to the IAF code
 selected_iaf_code_risk = (iaf_codes[selected_iaf_code]["Risk Level"])
 
 print (f"The Risk Level for the selected code is: {selected_iaf_code_risk}")
-# if selected_iaf_code_risk == "High":
-#     hq_audit_time = hq_audit_time +((hq_audit_time*10)/100)
-total_enhancement_percentage +=10
-# else:
-#     hq_audit_time = hq_audit_time
+if selected_iaf_code_risk == "High":
+    total_enhancement_percentage +=10
+else:
+    total_enhancement_percentage = total_enhancement_percentage
 print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
 print(f"The total reduction of audit time is: {total_reduction_percentage}%\n")
-# print(f"The audit time has been adjusted to: {round(hq_audit_time, 2)}\n")
+
 
 print("DETERMINE THE COMPLEXITY OF THE QMS")
 print("The next 4 questions will help us on defining the Complexity Level of the organization's QMS.")
@@ -68,17 +66,8 @@ else:
     total_reduction_percentage +=10
 print(f"The complexity of the Quality Management System has been determined as: {qms_complexity}\n")
 
-# if qms_complexity == "High":
-#     hq_audit_time = hq_audit_time +((hq_audit_time*10)/100)
-# elif qms_complexity == "Low":
-#     hq_audit_time = hq_audit_time - ((hq_audit_time * 10) / 100)
-# else:
-#     hq_audit_time = hq_audit_time
-
 print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
 print(f"The total reduction of audit time is: {total_reduction_percentage}%")
-# print(f"The audit time has been adjusted to: {round(hq_audit_time, 2)}\n")
-
 
 
 print("DETERMINE THE MATURITY OF THE QUALITY MANAGEMENT SYSTEM")
@@ -104,19 +93,15 @@ else:
 print(f"The maturity of the Quality Management System has been determined as: {qms_maturity}\n")
 
 if qms_maturity == "High":
-    # hq_audit_time = hq_audit_time -((hq_audit_time*10)/100)
     total_reduction_percentage +=10
 elif qms_maturity == "Low":
-    # hq_audit_time = hq_audit_time + ((hq_audit_time * 10) / 100)
     total_enhancement_percentage +=10
 else:
-    # hq_audit_time = hq_audit_time
     total_enhancement_percentage = total_enhancement_percentage
 
 
 print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
 print(f"The total reduction of audit time is: {total_reduction_percentage}%")
-# print(f"The audit time has been adjusted to: {round(hq_audit_time, 2)}\n")
 
 
 print("OTHER REDUCTIONS")
@@ -125,8 +110,9 @@ def other_reductions():
     global total_reduction_percentage
     input("Next, a list of other reason for audit time reduction will be provided. Press" " Enter " "to see the list:")
     print(f"{(tabulate(reduction_table, headers=reduction_headers, tablefmt="grid"))} \n")
-    other_reduction_selection = int(input ("If you wish to apply further reductions to this calculation, please type below the "
-                                 "related number or type 0 (zero) for no further reductions.\n"
+    other_reduction_selection = int(input ("If you wish to apply further reductions to this calculation,"
+                                           " please type below the related number or type 0 (zero) for no further "
+                                           "reductions.\n"
               "IMPORTANT: The maximum amount of reduction allowed for the calculation is 30%.\n"))
 
     percentage_other_reduction = (reduction_table[other_reduction_selection][2])
@@ -161,9 +147,6 @@ def other_enhancements():
     print(f"The total reduction of audit time is: {total_reduction_percentage}%")
     total_time_adjustment = total_enhancement_percentage - total_reduction_percentage
     hq_audit_time = hq_audit_time + (hq_audit_time * total_time_adjustment) / 100
-    print(total_time_adjustment)
-    print(f"The audit time has been adjusted to: {round(hq_audit_time, 2)}")
-
 
 other_reductions()
 
