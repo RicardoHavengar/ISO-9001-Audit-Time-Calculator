@@ -24,7 +24,7 @@ print(f"The audit time according to the IAF MD 5 table for initial certification
 
 print ("NUMBER OF EMPLOYEE PERFORMING SIMILAR ACTIVITIES")
 no_employee_similar_activities = int(input("Please type the number of employees performing similar activities:\n"))
-effective_no_employee = hq_employee_count - (no_employee_similar_activities/2)
+effective_no_employee = hq_employee_count - round(no_employee_similar_activities/2)
 print(f"The effective number of employee is: {effective_no_employee}")
 hq_audit_time = find_range_for_employee_count(audit_days_table,effective_no_employee)
 print(f"Based on the effective number of employees, the audit time is: {round(hq_audit_time, 2)}\n")

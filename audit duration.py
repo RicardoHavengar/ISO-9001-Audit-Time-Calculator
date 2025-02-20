@@ -9,12 +9,15 @@ def create_audit_duration(duration):
     initial_certification = round(duration,2)
     initial_on_site_min = round (((initial_certification * 80)/100),2)
     initial_total_on_site = round_to_half(initial_on_site_min)
+
     surveillance_1 = round(duration/3,2)
     surveillance_1_on_site_min = round((initial_on_site_min/3),2)
     surveillance_1_total_on_site = round_to_half(surveillance_1_on_site_min)
+
     surveillance_2 = round(duration/3,2)
     surveillance_2_on_site_min = round((initial_on_site_min / 3),2)
     surveillance_2_total_on_site = round_to_half(surveillance_2_on_site_min)
+
     recertification = round((duration/3)*2,2)
     recertification_on_site_min = round(((initial_on_site_min/3) * 2),2)
     recertification_total_on_site = round_to_half(recertification_on_site_min)
