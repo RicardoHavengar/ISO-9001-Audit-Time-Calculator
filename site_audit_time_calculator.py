@@ -1,36 +1,70 @@
 from audit_days import find_range_for_employee_count, audit_days_table
-
+from tabulate import tabulate
 site_number = 0
 number_of_sites = int(input("Please provide the number of additional sites:\n"))
 site_number = number_of_sites
 site_number_list = []
 site_id_number = 1
+multisite_duration_table = {}
 site_duration_table = {}
-while site_number >0:
-    site_employee_count = int(input(f"Please provide the employee count to site #{(len(site_number_list)+1)}:\n"))
 
-    site_audit_days = find_range_for_employee_count(audit_days_table, site_employee_count)
-    print(f"The number of days for initial audit according to IAF MD 5 is: {round(site_audit_days,2)}")
+def round_to_half(x):
+    return round(x * 2)/2
 
-    employee_similar_activities = int(input("Please provide the number of employees performing similar tasks:\n"))
+def calculate_multisite():
+    global site_number
+    global site_id_number
+    while site_number >0:
+        site_employee_count = int(input(f"Please provide the employee count to site #{(len(site_number_list)+1)}:\n"))
 
-    effective_number_of_employees = site_employee_count - round(employee_similar_activities/2)
-    print (f"The effective number of employees is: {effective_number_of_employees}")
+        site_audit_days = find_range_for_employee_count(audit_days_table, site_employee_count)
+        print(f"The number of days for initial audit according to IAF MD 5 is: {round(site_audit_days,2)}")
 
-    number_of_days_effective_employees = find_range_for_employee_count(audit_days_table,effective_number_of_employees)
-    print (f"The number of days according to the effective number of employees is: "
-           f"{round(number_of_days_effective_employees)}\n")
-    site_number -=1
-    site_number_list.append(site_id_number)
-    site_id_number +=1
-    site_duration_table["Site Number"] = len(site_number_list)
-    site_duration_table["Initial Certification"] = number_of_days_effective_employees
-    site_duration_table["Surveillance 1"] = round(number_of_days_effective_employees/3,2)
-    site_duration_table["Surveillance 2"] = round(number_of_days_effective_employees/3,2)
-    site_duration_table["Recertification"] = round ((number_of_days_effective_employees/3)*2,2)
+        employee_similar_activities = int(input("Please provide the number of employees performing similar tasks:\n"))
+
+        effective_number_of_employees = site_employee_count - round(employee_similar_activities/2)
+        print (f"The effective number of employees is: {effective_number_of_employees}")
 
 
-    print(site_duration_table)
-    # print (site_number)
-    # print (site_number_list)
-    # print (len(site_number_list))
+        number_of_days_effective_employees = find_range_for_employee_count(audit_days_table,effective_number_of_employees)
+        print(number_of_days_effective_employees)
+
+        additional_reduction = int(input("I applicable, apply further reduction by typing either 10 or 20."
+                                         "If no further enhancement is required, please type 0 (zero)\n"))
+        reduction_number_of_days_effective_employees = number_of_days_effective_employees - ((
+                number_of_days_effective_employees * additional_reduction)/100)
+
+        print(reduction_number_of_days_effective_employees)
+
+
+        additional_enhancement = int(input("I applicable, apply further enhancement by typing either  10 or 20."
+                                           "If no further enhancement is required, please type 0 (zero)\n"))
+        enhancement_number_of_days_effective_employees = reduction_number_of_days_effective_employees + ((
+                    number_of_days_effective_employees * additional_enhancement) / 100)
+
+        print(enhancement_number_of_days_effective_employees)
+
+        print (f"The number of days according to the effective number of employees is: "
+               f"{round (enhancement_number_of_days_effective_employees)}\n")
+        site_number -=1
+        site_number_list.append(site_id_number)
+        site_id_number +=1
+
+
+        site_id = len(site_number_list)
+        site_initial_certification = round(enhancement_number_of_days_effective_employees,2)
+        site_surveillance_1 = round(enhancement_number_of_days_effective_employees/3,2)
+        site_surveillance_2 = round(enhancement_number_of_days_effective_employees/3,2)
+        site_recertification = round ((enhancement_number_of_days_effective_employees/3)*2,2)
+
+        cycle_table = [round_to_half(site_initial_certification * 80/100), round_to_half(site_surveillance_1 * 80/100),
+                       round_to_half(site_surveillance_2 * 80/100), round_to_half(site_recertification * 80/100)]
+        multisite_duration_table[site_id] = cycle_table
+
+    total_multisite_audit_duration_table  = [(key , value[0], value[1], value[2], value[3]) for key, value in multisite_duration_table.items()]
+    multisite_table_headers = ["Site Number", "Initial Certification (80% rounded)", "Surveillance 1 (80% rounded)",
+                               "Surveillance 2 (80% rounded)", "Recertification (80% rounded)"]
+
+    print (f"{(tabulate(total_multisite_audit_duration_table, headers = multisite_table_headers, tablefmt = "grid"))}")
+        # print(multisite_duration_table)
+

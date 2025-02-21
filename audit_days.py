@@ -37,7 +37,7 @@ audit_days_table = {
     "range5": create_employee_count_range(26, 45, 4.0, 0.05),
     "range6": create_employee_count_range(46, 65, 5.0, 0.05),
     "range7": create_employee_count_range(66, 85, 6.0, 0.05),
-    "range8": create_employee_count_range(86, 125, 8.0, 0.02),
+    "range8": create_employee_count_range(86, 125, 7.0, 0.02),
     "range9": create_employee_count_range(126, 175, 8.0, 0.02),
     "range10": create_employee_count_range(176, 275, 9.0, 0.01),
     "range11": create_employee_count_range(276, 425, 10.0, 0.006),
