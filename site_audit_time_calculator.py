@@ -1,5 +1,7 @@
 from audit_days import find_range_for_employee_count, audit_days_table
 from tabulate import tabulate
+from HQ_audit_time_calculator import total_enhancement_percentage, total_reduction_percentage, total_time_adjustment
+
 site_number = 0
 number_of_sites = int(input("Please provide the number of additional sites:\n"))
 site_number = number_of_sites
@@ -7,11 +9,15 @@ site_number_list = []
 site_id_number = 1
 multisite_duration_table = {}
 site_duration_table = {}
+total_enhancement_percentage = total_enhancement_percentage
+total_reduction_percentage = total_reduction_percentage
 
 def round_to_half(x):
     return round(x * 2)/2
 
 def calculate_multisite():
+    global total_reduction_percentage
+    global total_enhancement_percentage
     global site_number
     global site_id_number
     while site_number >0:
@@ -27,25 +33,39 @@ def calculate_multisite():
 
 
         number_of_days_effective_employees = find_range_for_employee_count(audit_days_table,effective_number_of_employees)
-        print(number_of_days_effective_employees)
+        days_effective_employees_adjusted = (number_of_days_effective_employees +
+                                             ((number_of_days_effective_employees * total_time_adjustment)/100))
+        print (f"Considering the effective number of employees and the enhancements and reductions resulting "
+               f"from IAF code risk, QMS Complexity and QMS Maturity,the number of audit days for this site is: "
+                     f"{round(days_effective_employees_adjusted, 2)}")
 
-        additional_reduction = int(input("I applicable, apply further reduction by typing either 10 or 20."
+
+        print (f"The current percentage of reduction is:{total_reduction_percentage}")
+        print (f"The total number of enhancements is: {total_enhancement_percentage}")
+        print (f"Total Adjustment is {total_time_adjustment}")
+
+        additional_reduction = int(input("If applicable, apply further reduction by typing either 10 or 20."
                                          "If no further enhancement is required, please type 0 (zero)\n"))
-        reduction_number_of_days_effective_employees = number_of_days_effective_employees - ((
-                number_of_days_effective_employees * additional_reduction)/100)
+        reduction_number_of_days_effective_employees = round_to_half (days_effective_employees_adjusted - ((
+                site_audit_days * additional_reduction)/100))
 
-        print(reduction_number_of_days_effective_employees)
+        print (round(reduction_number_of_days_effective_employees,2))
+        total_reduction_percentage = + additional_reduction
+        print (f"The total reduction applied to this site is: {total_reduction_percentage}%\n")
 
-
-        additional_enhancement = int(input("I applicable, apply further enhancement by typing either  10 or 20."
+        additional_enhancement = int(input("If applicable, apply further enhancement by typing either  10 or 20."
                                            "If no further enhancement is required, please type 0 (zero)\n"))
-        enhancement_number_of_days_effective_employees = reduction_number_of_days_effective_employees + ((
-                    number_of_days_effective_employees * additional_enhancement) / 100)
+        enhancement_number_of_days_effective_employees = round_to_half(reduction_number_of_days_effective_employees + ((
+                    site_audit_days * additional_enhancement) / 100))
 
-        print(enhancement_number_of_days_effective_employees)
+        total_enhancement_percentage = total_enhancement_percentage + additional_enhancement
+
+        print (f"The total enhancement applied to this site is: {total_enhancement_percentage}%\n")
+
+        print (enhancement_number_of_days_effective_employees)
 
         print (f"The number of days according to the effective number of employees is: "
-               f"{round (enhancement_number_of_days_effective_employees)}\n")
+               f"{enhancement_number_of_days_effective_employees}\n")
         site_number -=1
         site_number_list.append(site_id_number)
         site_id_number +=1

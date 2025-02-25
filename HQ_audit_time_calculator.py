@@ -4,6 +4,7 @@ from tabulate import tabulate
 from audit_days import find_range_for_employee_count
 from audit_days import audit_days_table, find_range_for_employee_count
 from iaf_codes import iaf_codes, iaf_codes_table, headers
+from iaf_code_selection import iaf_code_selection
 
 hq_audit_time = 0
 total_reduction_percentage = 0
@@ -132,6 +133,7 @@ def other_reductions():
 
 def other_enhancements():
     global total_enhancement_percentage
+    global total_time_adjustment
     global hq_audit_time
     print("OTHER ENHANCEMENTS")
     input ("Next, a list of other reason for audit time enhancement will be provided. Press" " Enter " "to see the list:")
