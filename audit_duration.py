@@ -33,5 +33,5 @@ def create_audit_duration(duration):
     print(f"{(tabulate(total_audit_duration_table, headers=audit_duration_headers, tablefmt="grid"))} \n")
 
 
-create_audit_duration(hq_audit_time)
+# create_audit_duration(hq_audit_time)
 calculate_multisite()

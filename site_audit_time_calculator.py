@@ -88,3 +88,4 @@ def calculate_multisite():
     print (f"{(tabulate(total_multisite_audit_duration_table, headers = multisite_table_headers, tablefmt = "grid"))}")
         # print(multisite_duration_table)
 
+# calculate_multisite()
