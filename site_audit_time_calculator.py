@@ -35,24 +35,24 @@ def calculate_multisite():
         print (f"The effective number of employees is: {effective_number_of_employees}")
 
 
-        number_of_days_effective_employees = find_range_for_employee_count(audit_days_table,effective_number_of_employees)
+        number_of_days_effective_employees = (find_range_for_employee_count
+                                              (audit_days_table,effective_number_of_employees))
         days_effective_employees_adjusted = (number_of_days_effective_employees +
                                              ((number_of_days_effective_employees * total_time_adjustment)/100))
-        print (f"Considering the effective number of employees and the enhancements and reductions resulting "
-               f"from IAF code risk, QMS Complexity and QMS Maturity,the number of audit days for this site is: "
-                     f"{round(days_effective_employees_adjusted, 2)}")
+        # print (f"Number of audit days considering the effective number of employees:"
+        #              f"{round(days_effective_employees_adjusted, 2)}")
 
 
-        print (f"The current percentage of reduction is:{total_reduction_percentage}")
-        print (f"The total number of enhancements is: {total_enhancement_percentage}")
-        print (f"Total Adjustment is {total_time_adjustment}")
+        # print (f"The current percentage of reduction is:{total_reduction_percentage}")
+        # print (f"The total number of enhancements is: {total_enhancement_percentage}")
+        # print (f"Total Adjustment is {total_time_adjustment}")
 
         additional_reduction = int(input("If applicable, apply further reduction by typing either 10 or 20."
                                          "If no further enhancement is required, please type 0 (zero)\n"))
         reduction_number_of_days_effective_employees = round_to_half (days_effective_employees_adjusted - ((
                 site_audit_days * additional_reduction)/100))
 
-        print (round(reduction_number_of_days_effective_employees,2))
+        # print (round(reduction_number_of_days_effective_employees,2))
         total_reduction_percentage = + additional_reduction
         print (f"The total reduction applied to this site is: {total_reduction_percentage}%\n")
 
@@ -65,9 +65,9 @@ def calculate_multisite():
 
         print (f"The total enhancement applied to this site is: {total_enhancement_percentage}%\n")
 
-        print (enhancement_number_of_days_effective_employees)
+        # print (enhancement_number_of_days_effective_employees)
 
-        print (f"The number of days according to the effective number of employees is: "
+        print (f"The number of days according to the effective number of employees and applied adjustments is: "
                f"{enhancement_number_of_days_effective_employees}\n")
         site_number -=1
         site_number_list.append(site_id_number)
@@ -84,7 +84,8 @@ def calculate_multisite():
                        round_to_half(site_surveillance_2 * 80/100), round_to_half(site_recertification * 80/100)]
         multisite_duration_table[site_id] = cycle_table
 
-    total_multisite_audit_duration_table  = [(key , value[0], value[1], value[2], value[3]) for key, value in multisite_duration_table.items()]
+    total_multisite_audit_duration_table  = [(key , value[0], value[1], value[2], value[3]) for key, value in
+                                             multisite_duration_table.items()]
     return total_multisite_audit_duration_table
 
 def multisite_table(table):

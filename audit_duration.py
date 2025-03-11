@@ -1,6 +1,6 @@
 from HQ_audit_time_calculator import hq_audit_time
 from tabulate import tabulate
-from site_audit_time_calculator import calculate_multisite
+# from site_audit_time_calculator import calculate_multisite
 
 def round_to_half(x):
     return round(x * 2)/2
@@ -34,4 +34,4 @@ def create_audit_duration(duration):
 
 
 # create_audit_duration(hq_audit_time)
-calculate_multisite()
+# calculate_multisite()

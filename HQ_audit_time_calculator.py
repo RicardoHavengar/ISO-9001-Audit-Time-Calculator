@@ -27,7 +27,7 @@ def other_reductions(audit_time):
     print(f"The audit time has been reduced in {percentage_other_reduction}%\n")
     total_reduction_percentage += percentage_other_reduction
     print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
-    print(f"The total reduction of audit time is: {total_reduction_percentage}%")
+    print(f"The total reduction of audit time is: {total_reduction_percentage}%\n")
     # print(f"The audit time has been adjusted to: {round(hq_audit_time, 2)}\n")
     further_reduction_check = True
     while further_reduction_check:
@@ -59,7 +59,7 @@ def other_enhancements(audit_time):
     print(f"the audit time has been enhanced in {percentage_other_enhancement}%\n")
     total_enhancement_percentage += percentage_other_enhancement
     print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
-    print(f"The total reduction of audit time is: {total_reduction_percentage}%")
+    print(f"The total reduction of audit time is: {total_reduction_percentage}%\n")
     total_time_adjustment = total_enhancement_percentage - total_reduction_percentage
     hq_audit_time = hq_audit_time + (hq_audit_time * total_time_adjustment) / 100
     return hq_audit_time

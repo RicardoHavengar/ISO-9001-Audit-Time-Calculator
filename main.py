@@ -14,10 +14,15 @@ hq_audit_time = other_enhancements(hq_audit_time)
 calculation = True
 
 while calculation:
-    check_additional_site = input("Are there additional sites? Type Y or N.\n").lower().strip()
-    
-    if check_additional_site =="y":
+    print ("ADDITIONAL SITES")
+    check_additional_site = input("Are there additional sites? Type Y or N.\n").lower()
+    if check_additional_site =="n":
+        from audit_duration import create_audit_duration
+        create_audit_duration(hq_audit_time)
+        calculation = False
+    elif check_additional_site =="y":
         print("CALCULATION OF AUDIT TIME - ADDITIONAL SITES")
+        print("NOTE: The audit time adjustments applied to the HQ will also be applied to the additional sites")
         from site_audit_time_calculator import (calculate_multisite, multisite_table,
                                                 total_multisite_audit_duration_table)
         calculate_multisite()
@@ -25,9 +30,6 @@ while calculation:
         create_audit_duration(hq_audit_time)
         multisite_final_table = multisite_table(total_multisite_audit_duration_table)
         calculation = False
-    elif check_additional_site =="n":
-        from audit_duration import create_audit_duration
-        create_audit_duration(hq_audit_time)
-        calculation = False
     else:
         print("Invalid option, please type either y or n.\n")
+
