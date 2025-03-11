@@ -11,6 +11,7 @@ multisite_duration_table = {}
 site_duration_table = {}
 total_enhancement_percentage = total_enhancement_percentage
 total_reduction_percentage = total_reduction_percentage
+total_multisite_audit_duration_table  = []
 
 def round_to_half(x):
     return round(x * 2)/2
@@ -18,9 +19,11 @@ def round_to_half(x):
 def calculate_multisite():
     global total_reduction_percentage
     global total_enhancement_percentage
+    global total_multisite_audit_duration_table
     global site_number
     global site_id_number
     while site_number >0:
+
         site_employee_count = int(input(f"Please provide the employee count to site #{(len(site_number_list)+1)}:\n"))
 
         site_audit_days = find_range_for_employee_count(audit_days_table, site_employee_count)
@@ -82,6 +85,9 @@ def calculate_multisite():
         multisite_duration_table[site_id] = cycle_table
 
     total_multisite_audit_duration_table  = [(key , value[0], value[1], value[2], value[3]) for key, value in multisite_duration_table.items()]
+    return total_multisite_audit_duration_table
+
+def multisite_table(table):
     multisite_table_headers = ["Site Number", "Initial Certification (80% rounded)", "Surveillance 1 (80% rounded)",
                                "Surveillance 2 (80% rounded)", "Recertification (80% rounded)"]
 

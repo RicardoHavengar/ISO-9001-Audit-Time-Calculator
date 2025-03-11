@@ -15,6 +15,7 @@ total_time_adjustment = 0
 
 def other_reductions(audit_time):
     global total_reduction_percentage
+    print("OTHER REDUCTIONS")
     input("Next, a list of other reason for audit time reduction will be provided. Press" " Enter " "to see the list:")
     print(f"{(tabulate(reduction_table, headers=reduction_headers, tablefmt="grid"))} \n")
     other_reduction_selection = int(input ("If you wish to apply further reductions to this calculation,"
@@ -28,21 +29,27 @@ def other_reductions(audit_time):
     print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
     print(f"The total reduction of audit time is: {total_reduction_percentage}%")
     # print(f"The audit time has been adjusted to: {round(hq_audit_time, 2)}\n")
-    if total_reduction_percentage < 30:
-        more_reduction = input("Does any other reduction should be applied? Type (Y/N).\n")
-        if more_reduction =='Y':
-            other_reductions(hq_audit_time)
+    further_reduction_check = True
+    while further_reduction_check:
+        if total_reduction_percentage < 30:
+            more_reduction = input("Does any other reduction should be applied? Type (Y/N).\n").lower()
+            if more_reduction =="y":
+                other_reductions(hq_audit_time)
+            elif more_reduction == "n":
+                return hq_audit_time
+                further_reduction_check = False
+            else:
+                print("Invalid option, please type either y or n")
         else:
-                other_enhancements(hq_audit_time)
-    else:
-        other_enhancements(hq_audit_time)
+            return hq_audit_time
 
 def other_enhancements(audit_time):
     global total_enhancement_percentage
     global total_time_adjustment
     global hq_audit_time
     print("OTHER ENHANCEMENTS")
-    input ("Next, a list of other reason for audit time enhancement will be provided. Press" " Enter " "to see the list:")
+    input ("Next, a list of other reason for audit time enhancement will be provided. Press" " Enter " "to see the "
+           "list:")
     print(f"{(tabulate(enhancement_table, headers=headers, tablefmt="grid"))} \n")
     other_enhancement_selection = int(input("If you wish to apply further enhancements to this calculation, "
                                             "please type below the related number or type 0 (zero) for no further "
@@ -55,8 +62,7 @@ def other_enhancements(audit_time):
     print(f"The total reduction of audit time is: {total_reduction_percentage}%")
     total_time_adjustment = total_enhancement_percentage - total_reduction_percentage
     hq_audit_time = hq_audit_time + (hq_audit_time * total_time_adjustment) / 100
-    print (hq_audit_time)
-
+    return hq_audit_time
 
 def calculate_hq():
     global total_enhancement_percentage
@@ -101,12 +107,12 @@ def calculate_hq():
 
     print("DETERMINE THE COMPLEXITY OF THE QMS")
     print("The next 4 questions will help us on defining the Complexity Level of the organization's QMS.")
-    processes_complexity_score = int(input("How would you score the complexity of the organization's processes? "
+    processes_complexity_score = int(input("1.How would you score the complexity of the organization's processes? "
                                            "Type 1:LOW, 2:MEDIUM, 3:HIGH:\n"))
-    volume_of_processes = int(input("How would you score the volume of processes? Type 1:LOW, 2:MEDIUM, 3:HIGH:\n"))
-    volume_of_sites = int(input("How would you score the volume of sites? Type 1:SMALL, 2:MEDIUM, 3:LARGE:\n"))
-    scope_complexity = int(input("How would you score the complexity of the scope of certification? Type 1:LOW, 2:MEDIUM, "
-                             "3:HIGH:\n"))
+    volume_of_processes = int(input("2.How would you score the volume of processes? Type 1:LOW, 2:MEDIUM, 3:HIGH:\n"))
+    volume_of_sites = int(input("3.How would you score the volume of sites? Type 1:SMALL, 2:MEDIUM, 3:LARGE:\n"))
+    scope_complexity = int(input("4.How would you score the complexity of the scope of certification? Type 1:LOW, "
+                                 "2:MEDIUM, 3:HIGH:\n"))
 
     qms_complexity_score = processes_complexity_score +volume_of_processes +volume_of_sites + scope_complexity
     if qms_complexity_score >= 10:
@@ -117,22 +123,22 @@ def calculate_hq():
     else:
         qms_complexity = "Low"
         total_reduction_percentage +=10
-    print(f"The complexity of the Quality Management System has been determined as: {qms_complexity}\n")
+    print(f"The complexity of the Quality Management System has been determined as: {qms_complexity}")
 
     print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
-    print(f"The total reduction of audit time is: {total_reduction_percentage}%")
+    print(f"The total reduction of audit time is: {total_reduction_percentage}%\n")
 
 
     print("DETERMINE THE MATURITY OF THE QUALITY MANAGEMENT SYSTEM")
     print("The next 4 questions will help us on defining the Maturity Level of the organization's QMS.")
-    internal_audit_maturity = int(input("How would you score the maturity of the Internal Audit Program? Type 1:LOW, "
+    internal_audit_maturity = int(input("1.How would you score the maturity of the Internal Audit Program? Type 1:LOW, "
                                         "2:MEDIUM, "
                                "3:HIGH:\n"))
-    delivery_performance = int(input("How would you score the on-time delivery performance? Type 1:LOW, 2:MEDIUM, "
+    delivery_performance = int(input("2.How would you score the on-time delivery performance? Type 1:LOW, 2:MEDIUM, "
                                      "3:HIGH:\n"))
-    product_conformity = int(input("How would you score the conformity of the delivered products? Type 1:LOW, 2:MEDIUM, "
+    product_conformity = int(input("3.How would you score the conformity of the delivered products? Type 1:LOW, 2:MEDIUM, "
                                "3:HIGH:\n"))
-    customer_satisfaction = int(input("How would you score the Customer Satisfaction? Type 1:LOW, 2:MEDIUM, 3:HIGH:\n"))
+    customer_satisfaction = int(input("4.How would you score the Customer Satisfaction? Type 1:LOW, 2:MEDIUM, 3:HIGH:\n"))
 
 
     qms_maturity_score = internal_audit_maturity + delivery_performance + product_conformity + customer_satisfaction
@@ -143,7 +149,7 @@ def calculate_hq():
     else:
         qms_maturity = "Low"
 
-    print(f"The maturity of the Quality Management System has been determined as: {qms_maturity}\n")
+    print(f"The maturity of the Quality Management System has been determined as: {qms_maturity}")
 
     if qms_maturity == "High":
         total_reduction_percentage +=10
@@ -152,12 +158,8 @@ def calculate_hq():
     else:
         total_enhancement_percentage = total_enhancement_percentage
 
-
     print(f"The total enhancement of audit time is: {total_enhancement_percentage}%.")
-    print(f"The total reduction of audit time is: {total_reduction_percentage}%")
+    print(f"The total reduction of audit time is: {total_reduction_percentage}%\n")
 
-
-    print("OTHER REDUCTIONS")
-
-    print (hq_audit_time)
-    other_reductions(hq_audit_time)
+    return hq_audit_time
+    # other_reductions(hq_audit_time)
